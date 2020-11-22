@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Fruit;
 use Illuminate\Http\Request;
+use App\Http\Resources\Fruit as FruitResource;
+use App\Http\Resources\FruitCollection;
+use Carbon\Carbon;
+use Illuminate\Validation\Validator;
 
 class FruitController extends Controller
 {
+    //use Carbon;
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +19,7 @@ class FruitController extends Controller
      */
     public function index()
     {
-        //
+        return new FruitCollection(Fruit::all());
     }
 
     /**
@@ -35,7 +40,15 @@ class FruitController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|max:20',
+        ]);
+
+        $fruit = Fruit::create($request->all());
+
+        return (new FruitResource($fruit))
+                ->response()
+                ->setStatusCode(201);
     }
 
     /**
@@ -44,9 +57,9 @@ class FruitController extends Controller
      * @param  \App\Fruit  $fruit
      * @return \Illuminate\Http\Response
      */
-    public function show(Fruit $fruit)
+    public function show($id)
     {
-        //
+        return new FruitResource(Fruit::findOrFail($id));
     }
 
     /**
@@ -67,9 +80,16 @@ class FruitController extends Controller
      * @param  \App\Fruit  $fruit
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Fruit $fruit)
+    public function update(Request $request, $id)
     {
-        //
+        $fruit = Fruit::where("id", $id)->update([
+            "name" => $request->name,
+            "size" => $request->size,
+            "main_color" => $request->main_color,
+            "updated_at" => Carbon::now()
+        ]);
+
+        return response()->json(["fruit" => $fruit]);
     }
 
     /**
@@ -78,8 +98,11 @@ class FruitController extends Controller
      * @param  \App\Fruit  $fruit
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Fruit $fruit)
+    public function delete($id)
     {
-        //
+        $fruit = Fruit::findOrFail($id);
+        $fruit->delete();
+
+        return response()->json(null, 204);
     }
 }

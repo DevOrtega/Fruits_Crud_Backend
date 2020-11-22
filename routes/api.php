@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/fruits', 'FruitController@index');
+Route::get('/fruits/{id}', 'FruitController@show');
+Route::post('/fruits', 'FruitController@store');
+Route::delete('/fruits/{id}', 'FruitController@delete');
+Route::patch('/fruits/{id}', 'FruitController@update');

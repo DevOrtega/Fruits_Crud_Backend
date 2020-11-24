@@ -46,6 +46,11 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'api-fruits' => [
+            'driver' => 'passport',
+            'provider' => 'fruits'
+        ],
     ],
 
     /*
@@ -69,6 +74,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+        'fruits' => [
+            'driver' => 'eloquent',
+            'model' => App\Fruit::class,
         ],
 
         // 'users' => [

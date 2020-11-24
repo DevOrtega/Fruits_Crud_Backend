@@ -40,8 +40,10 @@ class FruitController extends Controller
      */
     public function store(Request $request)
     {
+        $request->created_at=Carbon::now();
         $request->validate([
             'name' => 'required|max:20',
+            'size' => 'required'
         ]);
 
         $fruit = Fruit::create($request->all());

@@ -18,8 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/fruits', 'FruitController@index');
-Route::get('/fruits/{id}', 'FruitController@show');
-Route::post('/fruits', 'FruitController@store');
-Route::delete('/fruits/{id}', 'FruitController@delete');
-Route::patch('/fruits/{id}', 'FruitController@update');
+Route::get('/fruits', 'FruitController@index')->middleware('auth:api-fruits');
+Route::get('/fruits/{id}', 'FruitController@show')->middleware('auth:api-fruits');
+Route::post('/fruits', 'FruitController@store')->middleware('auth:api-fruits');
+Route::delete('/fruits/{id}', 'FruitController@delete')->middleware('auth:api-fruits');
+Route::patch('/fruits/{id}', 'FruitController@update')->middleware('auth:api-fruits');

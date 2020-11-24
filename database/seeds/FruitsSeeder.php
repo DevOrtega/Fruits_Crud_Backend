@@ -28,5 +28,13 @@ class FruitsSeeder extends Seeder
             'name' => 'Watermelon',
             'size' => 'big',
         ]);
+        DB::table('fruits')->insert([
+            'name' => 'Mango',
+            'size' => 'medium',
+        ]);
+        DB::table('fruits')->insert([
+            'name' => 'Avocado',
+            'size' => 'small',
+        ]);
     }
 }
